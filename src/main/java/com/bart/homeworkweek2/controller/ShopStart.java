@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 @Component
 @Profile("START")
-public class ShopStart implements Shop {
+public class ShopStart extends ProductService {
 
     @Value(value = "${value.variant}")
     private String variant;
@@ -25,13 +25,9 @@ public class ShopStart implements Shop {
         this.productService = productService;
     }
 
-    @Override
-    public BigDecimal getSumPrice() {
-        return getTotalPrice(productService);
-    }
+    public BigDecimal getSumPrice() { return getTotalPrice(productService); }
 
     @EventListener(ApplicationReadyEvent.class)
-    @Override
     public void showProductBasket() {
         System.out.println("Variant: " + variant);
         System.out.println("Your shopping basket contain: ");

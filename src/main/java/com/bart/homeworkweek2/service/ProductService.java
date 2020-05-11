@@ -29,8 +29,7 @@ public class ProductService {
     }
 
     public BigDecimal generatePrice() {
-        Random random = new Random();
-        int randomInt = random.nextInt((MAXIMUM_PRICE - MINIMUM_PRICE) * 100) + MINIMUM_PRICE;
+        int randomInt = MINIMUM_PRICE + (new Random().nextInt((MAXIMUM_PRICE - MINIMUM_PRICE) * 100));
         return new BigDecimal(BigInteger.valueOf(randomInt), SCALE);
     }
 
@@ -38,4 +37,11 @@ public class ProductService {
         return productsBasket;
     }
 
+    protected BigDecimal getTotalPrice(ProductService productService) {
+        BigDecimal sumPrice = new BigDecimal(0);
+        for (Product p : productService.getProductsBasket()) {
+            sumPrice = sumPrice.add(p.getPrice());
+        }
+        return sumPrice;
+    }
 }

@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 
 @Component
 @Profile("PLUS")
-public class ShopPlus implements Shop {
+public class ShopPlus extends ProductService {
 
     @Value(value = "${value.variant}")
     private String variant;
@@ -29,13 +29,11 @@ public class ShopPlus implements Shop {
         this.productService = productService;
     }
 
-    @Override
     public BigDecimal getSumPrice() {
         return getTotalPrice(productService);
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    @Override
     public void showProductBasket() {
         System.out.println("Variant: " + variant);
         System.out.println("Your shopping basket contain: ");
